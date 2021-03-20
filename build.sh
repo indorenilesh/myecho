@@ -28,13 +28,17 @@ then
   usage
 fi  
 
-if [[ "$APPENV" == "DEV" && "$APPENV" == "QA" && "$APPENV" == "DR" && "$APPENV" == "PROD" ]]
+if [[ "$APPENV" == "DEV" || "$APPENV" == "QA" || "$APPENV" == "DR" || "$APPENV" == "PROD" ]]
 then
-  usage
-fi
-
 #Create virtual environment
 createVE
 
 #Create application.properties
 cp config/${APPENV}_application.properties application.properties
+
+#Give execute permission to start.sh
+chmod 700 start.sh
+
+else
+  usage
+fi
