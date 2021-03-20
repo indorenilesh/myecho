@@ -5,4 +5,5 @@ WORKDIR /app
 COPY requirement.txt .
 RUN pip install -r requirement.txt
 COPY . .
-CMD python app.py
+RUN chmod 700 start.sh
+CMD [ "./start_app.sh" ]
