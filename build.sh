@@ -6,6 +6,15 @@ usage()
   exit 1
 }
 
+createVE()
+{
+  yum install python3 pip3
+  pip3 install virtualenv
+  virtualenv myecho_env
+  source myecho_env/bin/activate
+  pip3 install -r requirement.txt
+}
+
 while getopts "E:" opt
 do
   case $opt in
@@ -21,9 +30,13 @@ then
   usage
 fi  
 
-if [[ "$APPENV" == "DEV" || "$APPENV" == "QA" || "$APPENV" == "DR" || "$APPENV" == "PROD" ]]
+if [[ "$APPENV" == "DEV" && "$APPENV" == "QA" && "$APPENV" == "DR" && "$APPENV" == "PROD" ]]
 then
-  cp ${APPENV}_application.properties application.properties	
-else	
   usage
 fi
+
+#Create virtual environment
+createVE
+
+#Create application.properties
+cp config/${APPENV}_application.properties application.properties
