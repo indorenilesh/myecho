@@ -8,8 +8,6 @@ usage()
 
 createVE()
 {
-  yum install python3 pip3
-  pip3 install virtualenv
   virtualenv myecho_env
   source myecho_env/bin/activate
   pip3 install -r requirement.txt
