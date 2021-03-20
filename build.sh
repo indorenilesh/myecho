@@ -6,13 +6,6 @@ usage()
   exit 1
 }
 
-createVE()
-{
-  virtualenv myecho_env
-  source myecho_env/bin/activate
-  pip3 install -r requirement.txt
-}
-
 while getopts "E:" opt
 do
   case $opt in
@@ -29,15 +22,12 @@ then
 fi  
 
 if [[ "$APPENV" == "DEV" || "$APPENV" == "QA" || "$APPENV" == "DR" || "$APPENV" == "PROD" ]]
-then
-#Create virtual environment
-createVE
-
+then	
 #Create application.properties
 cp config/${APPENV}_application.properties application.properties
 
-#Give execute permission to start.sh
-chmod 700 start.sh
+#Build image
+docker image build -t myecho .
 
 else
   usage
